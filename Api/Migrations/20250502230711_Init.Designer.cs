@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250423073341_SeedRole")]
-    partial class SeedRole
+    [Migration("20250502230711_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -92,6 +92,7 @@ namespace Api.Migrations
             modelBuilder.Entity("Api.Models.Attachment", b =>
                 {
                     b.Property<string>("AttachmentId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("text");
 
                     b.Property<string>("FilePath")
@@ -103,7 +104,9 @@ namespace Api.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("UploadedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("NOW()");
 
                     b.HasKey("AttachmentId");
 
@@ -115,6 +118,7 @@ namespace Api.Migrations
             modelBuilder.Entity("Api.Models.Budget", b =>
                 {
                     b.Property<string>("BudgetId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("text");
 
                     b.Property<int>("Amount")
@@ -136,7 +140,9 @@ namespace Api.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("StartDate")
-                        .HasColumnType("timestamp with time zone");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("NOW()");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -148,12 +154,15 @@ namespace Api.Migrations
 
                     b.HasIndex("CurrencyId");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("Budgets");
                 });
 
             modelBuilder.Entity("Api.Models.Category", b =>
                 {
                     b.Property<string>("CategoryId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("text");
 
                     b.Property<string>("Icon")
@@ -172,6 +181,7 @@ namespace Api.Migrations
             modelBuilder.Entity("Api.Models.Currencie", b =>
                 {
                     b.Property<string>("CurrencieId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("text");
 
                     b.Property<string>("Code")
@@ -182,7 +192,9 @@ namespace Api.Migrations
                         .HasColumnType("numeric");
 
                     b.Property<DateTime>("UpdateAt")
-                        .HasColumnType("timestamp with time zone");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("NOW()");
 
                     b.HasKey("CurrencieId");
 
@@ -192,6 +204,7 @@ namespace Api.Migrations
             modelBuilder.Entity("Api.Models.Transaction", b =>
                 {
                     b.Property<string>("TransactionId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("text");
 
                     b.Property<int>("Amount")
@@ -206,7 +219,9 @@ namespace Api.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp with time zone");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("NOW()");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -230,6 +245,7 @@ namespace Api.Migrations
             modelBuilder.Entity("Api.Models.UserWallets", b =>
                 {
                     b.Property<string>("WalletId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("text");
 
                     b.Property<double>("Balance")
@@ -281,20 +297,6 @@ namespace Api.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "eb688785-a1bc-4498-ada9-08868e2ae1e5",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "a6a0aa58-1ca9-4fb0-9f7c-cfb345ea117f",
-                            Name = "User",
-                            NormalizedName = "USER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -416,12 +418,6 @@ namespace Api.Migrations
 
             modelBuilder.Entity("Api.Models.Budget", b =>
                 {
-                    b.HasOne("Api.Models.AppUser", "AppUser")
-                        .WithMany("Budgets")
-                        .HasForeignKey("BudgetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Api.Models.Category", "Category")
                         .WithMany("Budgets")
                         .HasForeignKey("CategoryId")
@@ -431,6 +427,12 @@ namespace Api.Migrations
                     b.HasOne("Api.Models.Currencie", "Currencie")
                         .WithMany("Budgets")
                         .HasForeignKey("CurrencyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Api.Models.AppUser", "AppUser")
+                        .WithMany("Budgets")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
