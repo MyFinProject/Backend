@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ValueGeneration;
 
 namespace Api.Data
 {
@@ -24,12 +25,22 @@ namespace Api.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<AppUser>().HasKey(u => u.Id);
-            modelBuilder.Entity<Budget>().HasKey(u => u.BudgetId);
-            modelBuilder.Entity<Transaction>().HasKey(u => u.TransactionId);
-            modelBuilder.Entity<Attachment>().HasKey(u => u.AttachmentId);
-            modelBuilder.Entity<UserWallets>().HasKey(u => u.WalletId);
-            modelBuilder.Entity<Category>().HasKey(c => c.CategoryId);
-            modelBuilder.Entity<Currencie>().HasKey(c => c.CurrencieId);
+            modelBuilder.Entity<Budget>(b =>
+            {
+                b.Property(x => x.StartDate).HasDefaultValueSql("NOW()");
+            });
+            modelBuilder.Entity<Transaction>(b =>
+            {
+                b.Property(x => x.Date).HasDefaultValueSql("NOW()");
+            });
+            modelBuilder.Entity<Attachment>(b =>
+            {
+                b.Property(x => x.UploadedAt).HasDefaultValueSql("NOW()");
+            });
+            modelBuilder.Entity<Currencie>(b =>
+            {
+                b.Property(x => x.UpdateAt).HasDefaultValueSql("NOW()");
+            });
 
             modelBuilder.Entity<Budget>()
                 .HasOne(b => b.Category)
@@ -38,7 +49,7 @@ namespace Api.Data
             modelBuilder.Entity<Budget>()
                 .HasOne(b => b.AppUser)
                 .WithMany(u => u.Budgets)
-                .HasForeignKey(b => b.BudgetId);
+                .HasForeignKey(b => b.UserId);
             modelBuilder.Entity<Budget>()
                 .HasOne(b => b.Currencie)
                 .WithMany(u => u.Budgets)
@@ -52,6 +63,10 @@ namespace Api.Data
                 .HasOne(ua => ua.Currencie)
                 .WithMany(u => u.UserAccounts)
                 .HasForeignKey(ua => ua.CurrencieId);
+            modelBuilder.Entity<UserWallets>()
+                .Property(w => w.WalletId)
+                .ValueGeneratedOnAdd()
+                .HasValueGenerator<SequentialGuidValueGenerator>();
 
             modelBuilder.Entity<Transaction>()
                 .HasOne(a => a.AppUser)
@@ -61,14 +76,17 @@ namespace Api.Data
                 .HasOne(a => a.Currencie)
                 .WithMany(u => u.Transactions)
                 .HasForeignKey(a => a.CurrencieId);
+            modelBuilder.Entity<Transaction>()
+                .Property(w => w.TransactionId)
+                .ValueGeneratedOnAdd()
+                .HasValueGenerator<SequentialGuidValueGenerator>();
 
             modelBuilder.Entity<Attachment>()
                 .HasOne(a => a.Transaction)
                 .WithMany(u => u.Attachments)
                 .HasForeignKey(a => a.TransactionId);
 
-            List<IdentityRole> roles = new List<IdentityRole>()
-            {
+            /*modelBuilder.Entity<IdentityRole>().HasData(
                 new IdentityRole
                 {
                     Name = "Admin",
@@ -78,9 +96,8 @@ namespace Api.Data
                 {
                     Name = "User",
                     NormalizedName = "USER"
-                },
-            };
-            modelBuilder.Entity<IdentityRole>().HasData(roles);
+                }
+            );*/
         }
     }
 }
