@@ -13,6 +13,5 @@ namespace Api.Models
         public string CurrencieId { get; set; } = string.Empty;
         public bool IsActive { get; set; } = true;
         public AppUser? AppUser { get; set; }
-        public Currencie? Currencie { get; set; }
     }
 }

@@ -23,7 +23,7 @@ namespace Api.Controllers
         {
             var Currencies = await _currenceRepository.GetAllAsync();
 
-            var CurreciesDto = Currencies.Select(s => s.ToCurrenceDTO);
+            var CurreciesDto = Currencies.Select(s => s.ToCurrenceDTO()).ToList();
 
             return Ok(Currencies);
         }
@@ -31,7 +31,7 @@ namespace Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromRoute] string id)
         {
-            var currencie = await _context.Currencies.FindAsync(id);
+            var currencie = await _currenceRepository.GetByIdAsync(id);
 
             if (currencie == null)
             {
@@ -44,8 +44,7 @@ namespace Api.Controllers
         public async Task<IActionResult> Create([FromBody] CurrenceDto currencieDto)
         {
             var CurrencieModel = currencieDto.ToCurrenceFromDto();
-            await _context.Currencies.FindAsync(CurrencieModel);
-            await _context.SaveChangesAsync();
+            await _currenceRepository.CreateAsync(CurrencieModel);
             return CreatedAtAction(nameof(GetById), new { id = CurrencieModel.CurrencieId }, CurrencieModel.ToCurrenceDTO());
 
         }
@@ -54,17 +53,7 @@ namespace Api.Controllers
         [Route("{id}")]
         public async Task<IActionResult> Update([FromRoute]string id,[FromBody] CurrenceDto updateCurrenceDto)
         {
-            var currenceModel = await _context.Currencies.FindAsync(id);
-
-            if (currenceModel == null)
-            {
-                return NotFound();
-            }
-
-            currenceModel.Rate = updateCurrenceDto.Rate;
-            currenceModel.Code = updateCurrenceDto.Code;
-
-            await _context.SaveChangesAsync();
+            var currenceModel = await _currenceRepository.UpdateAsync(id, updateCurrenceDto);
 
             return Ok(currenceModel.ToCurrenceDTO());
         }
@@ -73,16 +62,12 @@ namespace Api.Controllers
         [Route("{id}")]
         public async Task<IActionResult> Delete([FromRoute] string id)
         {
-            var currenceModel = await _context.Currencies.FirstOrDefaultAsync(x => x.CurrencieId == id);
+            var CurrenceModel = await _currenceRepository.DeleteAsync(id);
 
-            if (currenceModel == null)
+            if(CurrenceModel == null)
             {
                 return NotFound();
             }
-
-            _context.Currencies.Remove(currenceModel);
-
-            await _context.SaveChangesAsync();
 
             return NoContent();
         }
