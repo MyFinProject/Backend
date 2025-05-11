@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Controllers
 {
+    [Route("api/Currencie")]
     public class CurrencieController : ControllerBase
     {
         public readonly ApplicationDbContext _context;

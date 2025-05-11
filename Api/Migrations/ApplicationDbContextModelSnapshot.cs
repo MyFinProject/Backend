@@ -178,6 +178,7 @@ namespace Api.Migrations
             modelBuilder.Entity("Api.Models.Currencie", b =>
                 {
                     b.Property<string>("CurrencieId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("text");
 
                     b.Property<string>("Code")
@@ -265,6 +266,8 @@ namespace Api.Migrations
                     b.HasKey("WalletId");
 
                     b.HasIndex("CurrencieId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserWallets");
                 });
@@ -476,7 +479,7 @@ namespace Api.Migrations
 
                     b.HasOne("Api.Models.AppUser", "AppUser")
                         .WithMany("UserAccounts")
-                        .HasForeignKey("WalletId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

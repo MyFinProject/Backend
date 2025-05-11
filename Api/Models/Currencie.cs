@@ -7,7 +7,7 @@ namespace Api.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string CurrencieId { get; set; }
+        public string CurrencieId { get; set; } = Guid.NewGuid().ToString("N");
         public string Code { get; set; } = string.Empty;
         public decimal Rate { get; set; }
         public DateTime UpdateAt { get; set; } = DateTime.UtcNow;

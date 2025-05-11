@@ -6,7 +6,7 @@ namespace Api.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string BudgetId { get; set; }
+        public string BudgetId { get; set; } = Guid.NewGuid().ToString("N");
         public string UserId { get; set; } = string.Empty;
         public string CategoryId { get; set; } = string.Empty;
         public int Amount { get; set; }

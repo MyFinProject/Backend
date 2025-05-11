@@ -270,8 +270,8 @@ namespace Api.Migrations
                 {
                     table.PrimaryKey("PK_UserWallets", x => x.WalletId);
                     table.ForeignKey(
-                        name: "FK_UserWallets_AspNetUsers_WalletId",
-                        column: x => x.WalletId,
+                        name: "FK_UserWallets_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -379,6 +379,11 @@ namespace Api.Migrations
                 name: "IX_UserWallets_CurrencieId",
                 table: "UserWallets",
                 column: "CurrencieId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserWallets_UserId",
+                table: "UserWallets",
+                column: "UserId");
         }
 
         /// <inheritdoc />

@@ -48,6 +48,8 @@ builder.Services.AddSwaggerGen(option =>
 });
 
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<ICurrenceRepository, CurrenceRepository>();
+builder.Services.AddScoped<IWalletRepository, WalletRepository>();
 builder.Services.AddDbContext<ApplicationDbContext>(options => {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
