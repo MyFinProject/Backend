@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250502230711_Init")]
+    [Migration("20250511173949_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -270,6 +270,8 @@ namespace Api.Migrations
 
                     b.HasIndex("CurrencieId");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("UserWallets");
                 });
 
@@ -480,7 +482,7 @@ namespace Api.Migrations
 
                     b.HasOne("Api.Models.AppUser", "AppUser")
                         .WithMany("UserAccounts")
-                        .HasForeignKey("WalletId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

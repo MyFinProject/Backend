@@ -54,20 +54,14 @@ namespace Api.Data
                 .HasOne(b => b.Currencie)
                 .WithMany(u => u.Budgets)
                 .HasForeignKey(b => b.CurrencyId);
-
             modelBuilder.Entity<UserWallets>()
                 .HasOne(ua => ua.AppUser)
                 .WithMany(u => u.UserAccounts)
-                .HasForeignKey(ua => ua.WalletId);
+                .HasForeignKey(ua => ua.UserId);
             modelBuilder.Entity<UserWallets>()
                 .HasOne(ua => ua.Currencie)
                 .WithMany(u => u.UserAccounts)
                 .HasForeignKey(ua => ua.CurrencieId);
-            modelBuilder.Entity<UserWallets>()
-                .Property(w => w.WalletId)
-                .ValueGeneratedOnAdd()
-                .HasValueGenerator<SequentialGuidValueGenerator>();
-
             modelBuilder.Entity<Transaction>()
                 .HasOne(a => a.AppUser)
                 .WithMany(u => u.Transactions)
@@ -76,16 +70,11 @@ namespace Api.Data
                 .HasOne(a => a.Currencie)
                 .WithMany(u => u.Transactions)
                 .HasForeignKey(a => a.CurrencieId);
-            modelBuilder.Entity<Transaction>()
-                .Property(w => w.TransactionId)
-                .ValueGeneratedOnAdd()
-                .HasValueGenerator<SequentialGuidValueGenerator>();
 
             modelBuilder.Entity<Attachment>()
                 .HasOne(a => a.Transaction)
                 .WithMany(u => u.Attachments)
                 .HasForeignKey(a => a.TransactionId);
-
             /*modelBuilder.Entity<IdentityRole>().HasData(
                 new IdentityRole
                 {

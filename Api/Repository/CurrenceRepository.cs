@@ -25,7 +25,7 @@ namespace Api.Repository
         {
             var CurrencieModel = await _context.Currencies.FirstOrDefaultAsync(x => x.CurrencieId == id);
 
-            if (CurrencieModel != null)
+            if (CurrencieModel == null)
             {
                 return null;
             }

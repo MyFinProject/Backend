@@ -1,4 +1,5 @@
-﻿using Api.Models;
+﻿using Api.Dto.Wallets;
+using Api.Models;
 
 namespace Api.Interfaces
 {
@@ -6,5 +7,8 @@ namespace Api.Interfaces
     {
         Task<UserWallets?> GetByIdAsync (string id);
         Task<UserWallets> CreateAsync(UserWallets walletsModel);
+        Task<List<UserWallets>> GetAllByUserIdAsync (string userId);
+        Task<UserWallets?> DeleteAsync (string id);
+        Task<UserWallets> UpdateAsync(string id, WalletDto walletDto);
     }
 }

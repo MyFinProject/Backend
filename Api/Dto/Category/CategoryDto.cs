@@ -1,13 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Api.Dto.Wallets
+namespace Api.Dto.Category
 {
-    public class NewWalletDto
+    public class CategoryDto
     {
-
         [Required]
         public string Name { get; set; }
         [Required]
-        public string CurrencieId { get; set; }
+        public string Icon { get; set; }
     }
 }
