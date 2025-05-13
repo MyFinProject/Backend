@@ -70,7 +70,10 @@ namespace Api.Data
                 .HasOne(a => a.Currencie)
                 .WithMany(u => u.Transactions)
                 .HasForeignKey(a => a.CurrencieId);
-
+            modelBuilder.Entity<Transaction>()
+               .HasOne(a => a.UserWallets)
+               .WithMany(u => u.Transactions)
+               .HasForeignKey(a => a.WalletId);
             modelBuilder.Entity<Attachment>()
                 .HasOne(a => a.Transaction)
                 .WithMany(u => u.Attachments)

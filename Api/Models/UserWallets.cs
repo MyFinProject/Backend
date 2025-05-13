@@ -14,5 +14,6 @@ namespace Api.Models
         public bool IsActive { get; set; } = true;
         public AppUser? AppUser { get; set; }
         public Currencie? Currencie { get; set; }
+        public List<Transaction> Transactions { get; set; } = new List<Transaction>();
     }
 }
