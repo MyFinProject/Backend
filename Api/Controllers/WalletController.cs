@@ -38,6 +38,17 @@ namespace Api.Controllers
             return Ok(WalletsDto);
         }
 
+        [HttpGet("IdByName{Name}")]
+        public async Task<IActionResult> IdByName([FromRoute] string Name)
+        {
+            var WalletModel = await _WalletRepo.GetIdByName(Name);
+            if(WalletModel == null)
+            {
+                return NotFound();
+            }
+            return Ok(WalletModel.WalletId);
+        }
+
         [HttpDelete("DeleteWallet{id}")]
         public async Task<IActionResult> Delete([FromRoute] string id)
         {

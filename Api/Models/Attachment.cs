@@ -11,7 +11,6 @@ namespace Api.Models
         public string TransactionId { get; set; } = string.Empty;
         public string FilePath { get; set; } = String.Empty;
         public DateTime UploadedAt { get; set; } = DateTime.UtcNow;
-
         public Transaction? Transaction { get; set; }
 
     }

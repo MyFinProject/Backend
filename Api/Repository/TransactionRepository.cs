@@ -54,7 +54,6 @@ namespace Api.Repository
                 return null;
             }
             transactionModel.CurrencieId = transactionDto.CurrencieId;
-            transactionModel.UserId = transactionDto.UserId;
             transactionModel.WalletId = transactionDto.WalletId;
             transactionModel.CategoryId = transactionDto.CategoryId;
             transactionModel.Amount = transactionDto.Amount;

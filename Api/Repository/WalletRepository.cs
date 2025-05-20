@@ -44,6 +44,12 @@ namespace Api.Repository
             return await _context.UserWallets.FindAsync(id);
         }
 
+        public async Task<UserWallets?> GetIdByName(string Name)
+        {
+            var WalletModel = await _context.UserWallets.FirstOrDefaultAsync(x => x.Name == Name);
+            return WalletModel;
+        }
+
         public async Task<UserWallets> UpdateAsync(string id, WalletDto updateWalletDto)
         {
             var existingWallet = await _context.UserWallets.FirstOrDefaultAsync(w => w.WalletId == id);
