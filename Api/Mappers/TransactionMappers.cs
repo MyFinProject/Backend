@@ -10,8 +10,8 @@ namespace Api.Mappers
             return new TransactionDto
             {
                 Amount = transactionModel.Amount,
+                TypeOperation = transactionModel.TypeOperation,
                 CategoryId = transactionModel.CategoryId,
-                UserId = transactionModel.UserId,
                 WalletId = transactionModel.WalletId,
                 CurrencieId = transactionModel.CurrencieId,
                 Description = transactionModel.Description,
@@ -23,8 +23,8 @@ namespace Api.Mappers
             return new Transaction
             {
                 Amount = transactionDto.Amount,
+                TypeOperation = transactionDto.TypeOperation,
                 CategoryId = transactionDto.CategoryId,
-                UserId = transactionDto.UserId,
                 WalletId = transactionDto.WalletId,
                 CurrencieId = transactionDto.CurrencieId,
                 Description = transactionDto.Description,

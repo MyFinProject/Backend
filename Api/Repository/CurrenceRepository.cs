@@ -40,9 +40,9 @@ namespace Api.Repository
             return await _context.Currencies.ToListAsync();
         }
 
-        public async Task<Currencie?> GetByIdAsync(string id)
+        public async Task<Currencie?> GetByCodeAsync(string Code)
         {
-            return await _context.Currencies.FindAsync(id);
+            return await _context.Currencies.FirstOrDefaultAsync(x => x.Code == Code);
         }
 
         public async Task<Currencie> UpdateAsync(string id, CurrenceDto currenceDto)

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
+    [Route("api/Transaction")]
     public class TransactionController : ControllerBase
     {
         private readonly ITransactionRepository _transactionRepository;
@@ -37,7 +38,7 @@ namespace Api.Controllers
         [HttpDelete("{deleteId}")]
         public async Task<IActionResult> Delete([FromRoute] string deleteId)
         {
-            var transactionModel = _transactionRepository.DeleteAsync(deleteId);
+            var transactionModel = await _transactionRepository.DeleteAsync(deleteId);
 
             if (transactionModel == null)
             {
