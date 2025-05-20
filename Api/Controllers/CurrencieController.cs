@@ -29,10 +29,10 @@ namespace Api.Controllers
             return Ok(Currencies);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById([FromRoute] string id)
+        [HttpGet("{Code}")]
+        public async Task<IActionResult> GetByCode([FromRoute] string Code)
         {
-            var currencie = await _currenceRepository.GetByIdAsync(id);
+            var currencie = await _currenceRepository.GetByCodeAsync(Code);
 
             if (currencie == null)
             {
@@ -46,7 +46,7 @@ namespace Api.Controllers
         {
             var CurrencieModel = currencieDto.ToCurrenceFromDto();
             await _currenceRepository.CreateAsync(CurrencieModel);
-            return CreatedAtAction(nameof(GetById), new { id = CurrencieModel.CurrencieId }, CurrencieModel.ToCurrenceDTO());
+            return CreatedAtAction(nameof(GetByCode), new { id = CurrencieModel.CurrencieId }, CurrencieModel.ToCurrenceDTO());
 
         }
 

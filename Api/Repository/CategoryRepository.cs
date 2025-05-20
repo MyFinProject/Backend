@@ -37,6 +37,11 @@ namespace Api.Repository
             return await _context.Categories.FindAsync(id);
         }
 
+        public async Task<Category?> GetByNameAsync(string Name)
+        {
+            return await _context.Categories.FirstOrDefaultAsync(x => x.Name == Name);
+        }
+
         public async Task<Category?> UpdateAsync(Category categoryModel, string id)
         {
             var CategoryModelEx = await _context.Categories.FirstOrDefaultAsync(x => x.CategoryId == id);

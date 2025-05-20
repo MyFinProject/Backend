@@ -3,6 +3,7 @@ using System;
 using Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250513145603_Fix2")]
+    partial class Fix2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -107,7 +110,8 @@ namespace Api.Migrations
 
                     b.HasKey("AttachmentId");
 
-                    b.HasIndex("TransactionId");
+                    b.HasIndex("TransactionId")
+                        .IsUnique();
 
                     b.ToTable("Attachments");
                 });
@@ -204,8 +208,8 @@ namespace Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("text");
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("double precision");
+                    b.Property<int>("Amount")
+                        .HasColumnType("integer");
 
                     b.Property<string>("CategoryId")
                         .IsRequired()
@@ -224,8 +228,9 @@ namespace Api.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("TypeOperation")
-                        .HasColumnType("integer");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("WalletId")
                         .IsRequired()
@@ -236,6 +241,8 @@ namespace Api.Migrations
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("CurrencieId");
+
+                    b.HasIndex("UserId");
 
                     b.HasIndex("WalletId");
 
@@ -410,8 +417,8 @@ namespace Api.Migrations
             modelBuilder.Entity("Api.Models.Attachment", b =>
                 {
                     b.HasOne("Api.Models.Transaction", "Transaction")
-                        .WithMany("Attachments")
-                        .HasForeignKey("TransactionId")
+                        .WithOne("Attachment")
+                        .HasForeignKey("Api.Models.Attachment", "TransactionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -459,11 +466,19 @@ namespace Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Api.Models.AppUser", "AppUser")
+                        .WithMany("Transactions")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Api.Models.UserWallets", "UserWallets")
                         .WithMany("Transactions")
                         .HasForeignKey("WalletId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("AppUser");
 
                     b.Navigation("Category");
 
@@ -546,6 +561,8 @@ namespace Api.Migrations
                 {
                     b.Navigation("Budgets");
 
+                    b.Navigation("Transactions");
+
                     b.Navigation("UserAccounts");
                 });
 
@@ -567,7 +584,7 @@ namespace Api.Migrations
 
             modelBuilder.Entity("Api.Models.Transaction", b =>
                 {
-                    b.Navigation("Attachments");
+                    b.Navigation("Attachment");
                 });
 
             modelBuilder.Entity("Api.Models.UserWallets", b =>

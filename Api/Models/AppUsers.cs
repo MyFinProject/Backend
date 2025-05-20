@@ -6,6 +6,6 @@ namespace Api.Models
     {
         public List<Budget> Budgets { get; set; } = new List<Budget>();
         public List<UserWallets> UserAccounts { get; set; } = new List<UserWallets>();
-        public List<Transaction> Transactions { get; set; } = new List<Transaction>();
+
     }
 }

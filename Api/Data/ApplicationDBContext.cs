@@ -63,10 +63,6 @@ namespace Api.Data
                 .WithMany(u => u.UserAccounts)
                 .HasForeignKey(ua => ua.CurrencieId);
             modelBuilder.Entity<Transaction>()
-                .HasOne(a => a.AppUser)
-                .WithMany(u => u.Transactions)
-                .HasForeignKey(a => a.UserId);
-            modelBuilder.Entity<Transaction>()
                 .HasOne(a => a.Currencie)
                 .WithMany(u => u.Transactions)
                 .HasForeignKey(a => a.CurrencieId);
@@ -74,9 +70,9 @@ namespace Api.Data
                .HasOne(a => a.UserWallets)
                .WithMany(u => u.Transactions)
                .HasForeignKey(a => a.WalletId);
-            modelBuilder.Entity<Attachment>()
-                .HasOne(a => a.Transaction)
-                .WithMany(u => u.Attachments)
+            modelBuilder.Entity<Transaction>()
+                .HasMany(a => a.Attachments)
+                .WithOne(u => u.Transaction)
                 .HasForeignKey(a => a.TransactionId);
             /*modelBuilder.Entity<IdentityRole>().HasData(
                 new IdentityRole
