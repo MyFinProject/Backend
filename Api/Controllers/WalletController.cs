@@ -26,7 +26,7 @@ namespace Api.Controllers
             return Ok(wallets.ToWalletDto());
         }
 
-        [HttpGet("AllByUserId{UserId}")]
+        [HttpGet("AllByUserId/{UserId}")]
         public async Task<IActionResult> GetAllByUserId([FromRoute] string UserId)
         {
             var Wallets = await _WalletRepo.GetAllByUserIdAsync(UserId);
@@ -38,7 +38,7 @@ namespace Api.Controllers
             return Ok(WalletsDto);
         }
 
-        [HttpGet("IdByName{Name}")]
+        [HttpGet("IdByName/{Name}")]
         public async Task<IActionResult> IdByName([FromRoute] string Name)
         {
             var WalletModel = await _WalletRepo.GetIdByName(Name);
@@ -49,7 +49,7 @@ namespace Api.Controllers
             return Ok(WalletModel.WalletId);
         }
 
-        [HttpDelete("DeleteWallet{id}")]
+        [HttpDelete("DeleteWallet/{id}")]
         public async Task<IActionResult> Delete([FromRoute] string id)
         {
             var WalletModel = await _WalletRepo.DeleteAsync(id);

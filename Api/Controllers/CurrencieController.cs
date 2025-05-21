@@ -11,11 +11,9 @@ namespace Api.Controllers
     [Route("api/Currencie")]
     public class CurrencieController : ControllerBase
     {
-        public readonly ApplicationDbContext _context;
         private readonly ICurrenceRepository _currenceRepository;
         public CurrencieController(ApplicationDbContext context, ICurrenceRepository currenceRepository)
         {
-            _context = context;
             _currenceRepository = currenceRepository;
         }
 
