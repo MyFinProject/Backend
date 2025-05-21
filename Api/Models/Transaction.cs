@@ -17,7 +17,7 @@ namespace Api.Models
         public string Description { get; set; } = string.Empty;
         public UserWallets? UserWallets { get; set; }
         public Category? Category { get; set; }
-        public Currencie? Currencie { get; set; }
+        public Currency? Currencie { get; set; }
         public List<Attachment> Attachments { get; set; } = new List<Attachment>();
 
     }

@@ -17,6 +17,7 @@ namespace Api.Mappers
                 StartDate = budgetDto.StartDate,
                 EndDate = budgetDto.EndDate,
             };
+        }
         public static BudgetDto ToBudgetDto(this Budget budgetModel)
         {
             return new BudgetDto

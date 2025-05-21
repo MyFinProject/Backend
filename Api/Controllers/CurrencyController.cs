@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Controllers
 {
-    [Route("api/Currencie")]
-    public class CurrencieController : ControllerBase
+    [Route("api/Currency")]
+    public class CurrencyController : ControllerBase
     {
-        private readonly ICurrenceRepository _currenceRepository;
-        public CurrencieController(ApplicationDbContext context, ICurrenceRepository currenceRepository)
+        private readonly ICurrencyRepository _currenceRepository;
+        public CurrencyController(ApplicationDbContext context, ICurrencyRepository currenceRepository)
         {
             _currenceRepository = currenceRepository;
         }
@@ -40,7 +40,7 @@ namespace Api.Controllers
         }
 
         [HttpPost("Create")]
-        public async Task<IActionResult> Create([FromBody] CurrenceDto currencieDto)
+        public async Task<IActionResult> Create([FromBody] CurrencyDto currencieDto)
         {
             var CurrencieModel = currencieDto.ToCurrenceFromDto();
             await _currenceRepository.CreateAsync(CurrencieModel);
@@ -50,7 +50,7 @@ namespace Api.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<IActionResult> Update([FromRoute]string id,[FromBody] CurrenceDto updateCurrenceDto)
+        public async Task<IActionResult> Update([FromRoute]string id,[FromBody] CurrencyDto updateCurrenceDto)
         {
             var currenceModel = await _currenceRepository.UpdateAsync(id, updateCurrenceDto);
 

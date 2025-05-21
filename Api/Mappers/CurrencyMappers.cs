@@ -3,20 +3,20 @@ using Api.Models;
 
 namespace Api.Mappers
 {
-    public static class CurrenceMappers
+    public static class CurrencyMappers
     {
-        public static CurrenceDto ToCurrenceDTO(this Currencie currencieModel)
+        public static CurrencyDto ToCurrenceDTO(this Currency currencieModel)
         {
-            return new CurrenceDto
+            return new CurrencyDto
             {
                 Code = currencieModel.Code,
                 Rate = currencieModel.Rate,
             };
         }
 
-        public static Currencie ToCurrenceFromDto(this CurrenceDto currenceDto)
+        public static Currency ToCurrenceFromDto(this CurrencyDto currenceDto)
         {
-            return new Currencie
+            return new Currency
             {
                 Code = currenceDto.Code,
                 Rate = currenceDto.Rate,
