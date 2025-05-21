@@ -5,6 +5,8 @@ namespace Api.Dto.Wallets
     public class WalletDto
     {
         [Required]
+        public string WalletId { get; set; }
+        [Required]
         public String UserId { get; set; }
         [Required]
         public string Name { get; set; }

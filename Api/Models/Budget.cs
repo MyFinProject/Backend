@@ -11,7 +11,7 @@ namespace Api.Models
         public string CategoryId { get; set; } = string.Empty;
         public int Amount { get; set; }
         public string CurrencyId { get; set; } = string.Empty;
-        public string Period { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
         public DateTime StartDate { get; set; } = DateTime.UtcNow;
         public DateTime EndDate { get; set; }
         public AppUser? AppUser { get; set; }

@@ -20,6 +20,7 @@ namespace Api.Mappers
         {
             return new WalletDto
             {
+                WalletId = userWallet.WalletId,
                 UserId = userWallet.UserId,
                 Name = userWallet.Name,
                 Balance = userWallet.Balance,
