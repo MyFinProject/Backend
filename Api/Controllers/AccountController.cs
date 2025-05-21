@@ -83,5 +83,16 @@ namespace Api.Controllers
             }
         }
 
+        [HttpGet("decode/{token}")]
+        public async Task<IActionResult> Decode([FromRoute] String token)
+        {
+            var NameId = _tokenService.DecodeToken(token);
+            if(NameId == null)
+            {
+                return NotFound();
+            }
+            return Ok(NameId);
+        }
+
     }
 }

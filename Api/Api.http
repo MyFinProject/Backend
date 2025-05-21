@@ -1,6 +1,1 @@
 @Api_HostAddress = http://26.255.57.122:5260
-
-GET {{Api_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
