@@ -16,6 +16,6 @@ namespace Api.Models
         public DateTime EndDate { get; set; }
         public AppUser? AppUser { get; set; }
         public Category? Category { get; set; }
-        public Currencie? Currencie { get; set; }
+        public Currency? Currencie { get; set; }
     }
 }

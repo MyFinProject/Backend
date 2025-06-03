@@ -1,4 +1,5 @@
 ﻿using Api.Data;
+using Api.Dto.Transaction;
 using Api.Dto.Wallets;
 using Api.Interfaces;
 using Api.Models;
@@ -13,6 +14,22 @@ namespace Api.Repository
         public WalletRepository(ApplicationDbContext dbContext) 
         { 
             _context = dbContext;
+        }
+        public async Task<UserWallets?> ChangeBalance(TransactionDto transactionDto)
+        {
+            UserWallets? walletModel = await _context.UserWallets.FirstOrDefaultAsync(x => x.WalletId == transactionDto.WalletId);
+            if(walletModel == null)
+            {
+                return null;
+            }
+
+            if (transactionDto.TypeOperation == 1 || transactionDto.TypeOperation == 3)
+            {
+                walletModel.Balance += transactionDto.Amount;
+            }
+            else walletModel.Balance -= transactionDto.Amount;
+
+            return walletModel;
         }
         public async Task<UserWallets> CreateAsync(UserWallets walletsModel)
         {

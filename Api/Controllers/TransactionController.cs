@@ -9,10 +9,12 @@ namespace Api.Controllers
     public class TransactionController : ControllerBase
     {
         private readonly ITransactionRepository _transactionRepository;
+        private readonly IWalletRepository _walletRepository;
 
-        public TransactionController(ITransactionRepository transactionRepository)
+        public TransactionController(ITransactionRepository transactionRepository, IWalletRepository walletRepository)
         {
             _transactionRepository = transactionRepository;
+            _walletRepository = walletRepository;
         }
 
         [HttpGet("{id}")]
@@ -29,6 +31,11 @@ namespace Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] TransactionDto transactionDto)
         {
+            var walletModel = _walletRepository.ChangeBalance(transactionDto);
+            if (walletModel == null)
+            {
+                return NotFound();  
+            }
             var transactionModel = transactionDto.ToTransactionModel();
             await _transactionRepository.CreateAsync(transactionModel);
             return CreatedAtAction(nameof(GetById), new { id = transactionModel.TransactionId }, transactionModel.ToTransactionDto());

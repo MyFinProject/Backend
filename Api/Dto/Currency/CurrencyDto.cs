@@ -2,7 +2,7 @@
 
 namespace Api.Dto.Currences
 {
-    public class CurrenceDto
+    public class CurrencyDto
     {
         [Required]
         public string? Code { get; set; }

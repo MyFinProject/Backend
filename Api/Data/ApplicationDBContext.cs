@@ -18,7 +18,7 @@ namespace Api.Data
         public DbSet<UserWallets> UserWallets { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Attachment> Attachments { get; set; }
-        public DbSet<Currencie> Currencies { get; set; }
+        public DbSet<Currency> Currencies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -37,7 +37,7 @@ namespace Api.Data
             {
                 b.Property(x => x.UploadedAt).HasDefaultValueSql("NOW()");
             });
-            modelBuilder.Entity<Currencie>(b =>
+            modelBuilder.Entity<Currency>(b =>
             {
                 b.Property(x => x.UpdateAt).HasDefaultValueSql("NOW()");
             });
