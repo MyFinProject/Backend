@@ -10,8 +10,7 @@ MyFinProject Backend — это серверная часть приложени
 - **Язык программирования:** C#
 - **Фреймворк:** ASP.NET Core 3.1
 - **База данных:** PostgreSQL SQL Server
-- **ORM:** Entity Framework Core
-- **CI/CD:** GitHub Actions
+
 
 
 ## 🏗️ ERD DataBase
