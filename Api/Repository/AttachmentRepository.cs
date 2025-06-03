@@ -11,10 +11,10 @@ namespace Api.Repository
     public class AttachmentRepository : IAttachmentRepository
     {
         private readonly ITransactionRepository _transactionRepository;
-        private readonly ICurrenceRepository _currenceRepository;
+        private readonly ICurrencyRepository _currenceRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly ApplicationDbContext _context;
-        public AttachmentRepository(ITransactionRepository transactionRepository, ICurrenceRepository currenceRepository, 
+        public AttachmentRepository(ITransactionRepository transactionRepository, ICurrencyRepository currenceRepository, 
             ApplicationDbContext applicationDbContext, ICategoryRepository category) 
         {
             _categoryRepository = category;
@@ -33,7 +33,7 @@ namespace Api.Repository
 
         public async Task<Attachment> CreateTransAndAtt(AttachmentDto attachmentDto, string WalletId, CheckModel check)
         {
-            Currencie? CurrencieModel = await _currenceRepository.GetByCodeAsync("RUB");
+            Currency? CurrencieModel = await _currenceRepository.GetByCodeAsync("RUB");
             Category? categoryModel = await _categoryRepository.GetByNameAsync("Product");
             TransactionDto transaction = new TransactionDto
             {

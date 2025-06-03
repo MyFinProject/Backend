@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Api.Models
 {
-    public class Currencie
+    public class Currency
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

@@ -13,7 +13,7 @@ namespace Api.Models
         public string CurrencieId { get; set; } = string.Empty;
         public bool IsActive { get; set; } = true;
         public AppUser? AppUser { get; set; }
-        public Currencie? Currencie { get; set; }
+        public Currency? Currencie { get; set; }
         public List<Transaction> Transactions { get; set; } = new List<Transaction>();
     }
 }

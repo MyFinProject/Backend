@@ -6,22 +6,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Repository
 {
-    public class CurrenceRepository : ICurrenceRepository
+    public class CurrencyRepository : ICurrencyRepository
     {
         private readonly ApplicationDbContext _context;
-        public CurrenceRepository(ApplicationDbContext dbContext) 
+        public CurrencyRepository(ApplicationDbContext dbContext) 
         {
             _context = dbContext;
         }
 
-        public async Task<Currencie> CreateAsync(Currencie currencieModel)
+        public async Task<Currency> CreateAsync(Currency currencieModel)
         {
             await _context.Currencies.AddAsync(currencieModel);
             await _context.SaveChangesAsync();
             return currencieModel;
         }
 
-        public async Task<Currencie?> DeleteAsync(string id)
+        public async Task<Currency?> DeleteAsync(string id)
         {
             var CurrencieModel = await _context.Currencies.FirstOrDefaultAsync(x => x.CurrencieId == id);
 
@@ -35,17 +35,17 @@ namespace Api.Repository
             return CurrencieModel;
         }
 
-        public async Task<List<Currencie>> GetAllAsync()
+        public async Task<List<Currency>> GetAllAsync()
         {
             return await _context.Currencies.ToListAsync();
         }
 
-        public async Task<Currencie?> GetByCodeAsync(string Code)
+        public async Task<Currency?> GetByCodeAsync(string Code)
         {
             return await _context.Currencies.FirstOrDefaultAsync(x => x.Code == Code);
         }
 
-        public async Task<Currencie> UpdateAsync(string id, CurrenceDto currenceDto)
+        public async Task<Currency> UpdateAsync(string id, CurrencyDto currenceDto)
         {
             var existingCurrence = await _context.Currencies.FirstOrDefaultAsync(x =>x.CurrencieId == id);
 
