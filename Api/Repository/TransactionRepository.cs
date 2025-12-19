@@ -34,6 +34,11 @@ namespace Api.Repository
 
         }
 
+        public async Task<List<Transaction>> GetAllByWalletId(string WalletId)
+        {
+            return await _context.Transactions.Where(b => b.WalletId == WalletId).ToListAsync();
+        }
+
         public async Task<Transaction?> GetById(string id)
         {
             var transactionModel = await _context.Transactions.FindAsync(id);

@@ -9,5 +9,7 @@ namespace Api.Dto.Wallets
         public string Name { get; set; }
         [Required]
         public string CurrencieId { get; set; }
+        [Required]
+        public string ImageAdress { get; set; }
     }
 }

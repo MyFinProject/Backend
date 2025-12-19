@@ -7,6 +7,7 @@ namespace Api.Interfaces
     public interface ITransactionRepository
     {
         public Task<Transaction?> GetById(string id);
+        public Task<List<Transaction?>> GetAllByWalletId(string WalletId);
         public Task<Transaction> CreateAsync(Transaction transactionModel);
         public Task<Transaction?> UpdateAsync(string id, TransactionDto transactionDto);
         public Task<Transaction?> DeleteAsync(string id);

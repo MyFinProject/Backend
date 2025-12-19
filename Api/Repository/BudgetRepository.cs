@@ -62,8 +62,6 @@ namespace Api.Repository
             budgetModel.CategoryId = budgetDto.CategoryId;
             budgetModel.Amount = budgetDto.Amount;
             budgetModel.Name = budgetDto.Name;
-            budgetModel.StartDate = budgetDto.StartDate;
-            budgetModel.EndDate = budgetDto.EndDate;
             await _context.SaveChangesAsync();
             return budgetModel;
         }

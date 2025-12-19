@@ -26,6 +26,26 @@ namespace Api.Controllers
             return Ok(CategoryModel);
         }
 
+        [HttpGet("GetIdByName/{Name}")]
+        public async Task<IActionResult> GetIdByName([FromRoute] string Name)
+        {
+            var CategoryModel = await _categoryRepository.GetByNameAsync(Name);
+            if (CategoryModel == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(CategoryModel.CategoryId);
+        }
+
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GeAll()
+        {
+            var Categories = await _categoryRepository.GetAll();
+            var CategoriesDto = Categories.Select(x => x.ToCategoryDto()).ToList();
+            return Ok(CategoriesDto);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CategoryDto categoryDto)
         {

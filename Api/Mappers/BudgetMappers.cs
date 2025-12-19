@@ -14,7 +14,6 @@ namespace Api.Mappers
                 CategoryId = budgetDto.CategoryId,
                 Amount = budgetDto.Amount,
                 CurrencyId = budgetDto.CurrencyId,
-                StartDate = budgetDto.StartDate,
                 EndDate = budgetDto.EndDate,
             };
         }
@@ -27,8 +26,8 @@ namespace Api.Mappers
                 CategoryId = budgetModel.CategoryId,
                 Amount = budgetModel.Amount,
                 CurrencyId = budgetModel.CurrencyId,
-                StartDate = budgetModel.StartDate,
                 EndDate = budgetModel.EndDate,
+
             };
         }
         public static GetBudgetDto ToGetBudgetDto(this Budget budgetModel)

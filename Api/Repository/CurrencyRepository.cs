@@ -45,6 +45,11 @@ namespace Api.Repository
             return await _context.Currencies.FirstOrDefaultAsync(x => x.Code == Code);
         }
 
+        public async Task<Currency?> GetByIdAsync(string CurrencyId)
+        {
+            return await _context.Currencies.FirstOrDefaultAsync(x => x.CurrencieId == CurrencyId);
+        }
+
         public async Task<Currency> UpdateAsync(string id, CurrencyDto currenceDto)
         {
             var existingCurrence = await _context.Currencies.FirstOrDefaultAsync(x =>x.CurrencieId == id);

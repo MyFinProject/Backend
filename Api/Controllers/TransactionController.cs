@@ -28,10 +28,21 @@ namespace Api.Controllers
             return Ok(Transaction.ToTransactionDto());
         }
 
+        [HttpGet("GetAllByWalletId/{WalletId}")]
+        public async Task<IActionResult> GetAllByWalletId([FromRoute] string WalletId)
+        {
+            var Transaction = await _transactionRepository.GetAllByWalletId(WalletId);
+            if (Transaction == null)
+            {
+                return NotFound();
+            }
+            return Ok(Transaction);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] TransactionDto transactionDto)
         {
-            var walletModel = _walletRepository.ChangeBalance(transactionDto);
+            var walletModel = await _walletRepository.ChangeBalance(transactionDto);
             if (walletModel == null)
             {
                 return NotFound();  

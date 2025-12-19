@@ -17,17 +17,17 @@ namespace Api.Controllers
             _attachmentRepository = attachmentRepository;
             _attachmentService = attachmentService;
         }
-        [HttpPost("{WalletId}")]
+        [HttpPost("CreatеTransForAttachment/{WalletId}")]
         public async Task<IActionResult> CreatеTransForAttachment([FromRoute] string WalletId,[FromBody] AttachmentDto attachmentDto)
         {
-            CheckModel? check = await _attachmentService.ReadQr(attachmentDto);
-            if(check == null)
+            var check = await _attachmentService.ReadQr(attachmentDto);
+            if (check == null)
             {
                 return StatusCode(456, check);
             }
             Attachment attachmentModel = await _attachmentRepository.CreateTransAndAtt(attachmentDto, WalletId, check);
 
-            return Ok(attachmentModel);
+            return Ok(check);
         }
     }
 }

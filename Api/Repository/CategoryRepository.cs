@@ -32,6 +32,11 @@ namespace Api.Repository
             return CategoryModel;
         }
 
+        public async Task<List<Category>> GetAll()
+        {
+            return await _context.Categories.ToListAsync();
+        }
+
         public async Task<Category?> GetByIdAsync(string id)
         {
             return await _context.Categories.FindAsync(id);

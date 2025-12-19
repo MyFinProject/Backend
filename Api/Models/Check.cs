@@ -5,12 +5,12 @@ namespace Api.Models
 
     public class ReceiptData
     {
-        public JsonData data { get; set; }
+        public JsonData? data { get; set; }
     }
 
     public class JsonData
     {
-        public ReceiptJson json { get; set; }
+        public ReceiptJson? json { get; set; }
     }
 
     public class ReceiptJson

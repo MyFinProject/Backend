@@ -9,6 +9,7 @@ namespace Api.Mappers
         {
             return new CategoryDto
             {
+                Id = categoryModel.CategoryId,
                 Icon = categoryModel.Icon,
                 Name = categoryModel.Name,
             };
@@ -18,6 +19,7 @@ namespace Api.Mappers
         {
             return new Category
             {
+                CategoryId = categoryDto.Id,
                 Icon = categoryDto.Icon,
                 Name = categoryDto.Name,
             };

@@ -11,6 +11,7 @@ namespace Api.Models
         public string Name { get; set; } = string.Empty;
         public double Balance { get; set; }
         public string CurrencieId { get; set; } = string.Empty;
+        public string ImageAdress { get; set; } = string.Empty;
         public bool IsActive { get; set; } = true;
         public AppUser? AppUser { get; set; }
         public Currency? Currencie { get; set; }

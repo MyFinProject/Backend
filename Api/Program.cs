@@ -12,24 +12,33 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Diagnostics;
 using Api.Dto.Exceprion;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.AspNetCore.HttpsPolicy;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddCors(options =>
+if (builder.Environment.IsEnvironment("Docker") || builder.Environment.IsDevelopment())
 {
-    options.AddPolicy("AllowFrontend", policy =>
-    {
-        policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
-    });
-});
+    builder.Configuration.AddJsonFile("appsettings.Docker.json", optional: true);
+}
+
+
+builder.Services.AddCors();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ICurrencyRepository, CurrencyRepository>();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.SameSite = SameSiteMode.None;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.None;
+    options.Cookie.HttpOnly = true;
+});
 
 builder.Services.AddSwaggerGen(option =>
 {
@@ -59,10 +68,22 @@ builder.Services.AddSwaggerGen(option =>
     });
 });
 
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(80);
+});
+
+builder.Services.Configure<HttpsRedirectionOptions>(options =>
+{
+    options.HttpsPort = 7208;
+});
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddScoped<IBudgetRepository, BudgetRepository>();
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IMessageService, MessageService>();
 builder.Services.AddScoped<IAttachmentRepository, AttachmentRepository>();
-builder.Services.AddScoped<IAttachmentService, AttachmentService>();
+//builder.Services.AddScoped<IAttachmentService, AttachmentService>();
 builder.Services.AddScoped<ICurrencyRepository, CurrencyRepository>();
 builder.Services.AddScoped<IWalletRepository, WalletRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
@@ -119,8 +140,14 @@ builder.Services.AddAuthentication(options =>
         {
             Console.WriteLine($"Authentication failed: {context.Exception}");
             return Task.CompletedTask;
+        },
+        OnMessageReceived = context =>
+        {
+            context.Token = context.Request.Cookies["jwtToken"];
+            return Task.CompletedTask;
         }
     };
+
 });
 
 
@@ -162,8 +189,15 @@ app.UseExceptionHandler(errorApp =>
         }
     });
 });
-app.UseCors("AllowFrontend");
+app.UseHttpsRedirection();
+app.UseCors(builder => builder
+    .SetIsOriginAllowed(origin => true)
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .AllowCredentials());
 app.MapControllers();
+app.UseStaticFiles();
+app.UseCookiePolicy();
 app.UseAuthentication();
 app.UseAuthorization();
 

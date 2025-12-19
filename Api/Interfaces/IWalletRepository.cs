@@ -13,5 +13,6 @@ namespace Api.Interfaces
         public Task<List<UserWallets>> GetAllByUserIdAsync (string userId);
         public Task<UserWallets?> DeleteAsync (string id);
         public Task<UserWallets> UpdateAsync(string id, WalletDto walletDto);
+        public Task<UserWallets> UpdateNameAsync(string id, string Name);
     }
 }

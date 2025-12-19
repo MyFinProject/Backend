@@ -12,12 +12,14 @@ namespace Api.Repository
     {
         private readonly ITransactionRepository _transactionRepository;
         private readonly ICurrencyRepository _currenceRepository;
+        private readonly IWalletRepository _walletRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly ApplicationDbContext _context;
         public AttachmentRepository(ITransactionRepository transactionRepository, ICurrencyRepository currenceRepository, 
-            ApplicationDbContext applicationDbContext, ICategoryRepository category) 
+            ApplicationDbContext applicationDbContext, ICategoryRepository category, IWalletRepository walletRepository) 
         {
             _categoryRepository = category;
+            _walletRepository = walletRepository;
             _context = applicationDbContext;
             _currenceRepository = currenceRepository;
             _transactionRepository = transactionRepository;
@@ -33,18 +35,20 @@ namespace Api.Repository
 
         public async Task<Attachment> CreateTransAndAtt(AttachmentDto attachmentDto, string WalletId, CheckModel check)
         {
-            Currency? CurrencieModel = await _currenceRepository.GetByCodeAsync("RUB");
+            Currency? CurrencieModel = await _currenceRepository.GetByCodeAsync("USD");
             Category? categoryModel = await _categoryRepository.GetByNameAsync("Product");
             TransactionDto transaction = new TransactionDto
             {
                 WalletId = WalletId,
+                TypeOperation = check.operationType,
                 CategoryId = categoryModel.CategoryId,
                 Description = "",
-                Amount = check.totalSum,
+                Amount = (double)check.totalSum / 100,
                 CurrencieId = CurrencieModel.CurrencieId
             };
             Transaction transactionModel = transaction.ToTransactionModel();
             transactionModel = await _transactionRepository.CreateAsync(transactionModel);
+            await _walletRepository.ChangeBalance(transaction);
             Attachment attachmentModel = new Attachment
             {
                 FilePath = attachmentDto.FilePath,

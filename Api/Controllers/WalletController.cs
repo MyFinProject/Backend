@@ -67,6 +67,13 @@ namespace Api.Controllers
             return Ok(WalletModel);
         }
 
+        [HttpPut("UpdateName/{IdForUpdate}/{NewName}")]
+        public async Task<IActionResult> UpdateName([FromRoute] string IdForUpdate, string NewName)
+        {
+            var WalletModel = await _WalletRepo.UpdateNameAsync(IdForUpdate, NewName);
+            return Ok(WalletModel);
+        }
+
         [HttpPost("{UserId}")]
         public async Task<IActionResult> Create([FromRoute] string UserId, [FromBody]NewWalletDto walletDto)
         {

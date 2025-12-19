@@ -13,6 +13,7 @@ namespace Api.Mappers
                 Name = newWalletDto.Name,
                 Balance = 0,
                 CurrencieId = newWalletDto.CurrencieId,
+                ImageAdress = newWalletDto.ImageAdress,
             };
 
         }
@@ -26,6 +27,7 @@ namespace Api.Mappers
                 Balance = userWallet.Balance,
                 CurrencieId = userWallet.CurrencieId,
                 IsActive = userWallet.IsActive,
+                ImageAdress = userWallet.ImageAdress,
             };
         }
     }
