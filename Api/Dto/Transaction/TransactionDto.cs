@@ -9,7 +9,7 @@ namespace Api.Dto.Transaction
         [Required]
         public int TypeOperation { get; set; }
         [Required]
-        public string CategoryId { get; set; }
+        public string CategoryId { get; set; } = "f3f91de411a94471a73ac1c2f0923b3c";
         [Required]
         public double Amount { get; set; }
         [Required]

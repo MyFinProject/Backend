@@ -23,12 +23,13 @@ namespace Api.Repository
                 return null;
             }
 
-            if (transactionDto.TypeOperation == 1 || transactionDto.TypeOperation == 3)
+            if (transactionDto.TypeOperation == 3 || transactionDto.TypeOperation == 2)
             {
                 walletModel.Balance += transactionDto.Amount;
             }
             else walletModel.Balance -= transactionDto.Amount;
 
+            await _context.SaveChangesAsync();
             return walletModel;
         }
         public async Task<UserWallets> CreateAsync(UserWallets walletsModel)
@@ -79,6 +80,19 @@ namespace Api.Repository
             existingWallet.Balance= updateWalletDto.Balance;
             existingWallet.IsActive = updateWalletDto.IsActive;
             existingWallet.Name = updateWalletDto.Name;
+            await _context.SaveChangesAsync();
+            return existingWallet;
+        }
+
+        public async Task<UserWallets> UpdateNameAsync(string id, string Name)
+        {
+            var existingWallet = await _context.UserWallets.FirstOrDefaultAsync(w => w.WalletId == id);
+            if (existingWallet == null)
+            {
+                return null;
+            }
+            existingWallet.Name = Name;
+            await _context.SaveChangesAsync();
             return existingWallet;
         }
     }

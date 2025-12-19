@@ -1,0 +1,9 @@
+services:
+  api:
+    image: ${DOCKER_REGISTRY-}api
+    build:
+      context: .
+      dockerfile: Api/Dockerfile
+    ports:
+    - "0.0.0.0:5260:8080"   
+    - "0.0.0.0:7208:8081"

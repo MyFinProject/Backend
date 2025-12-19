@@ -74,18 +74,6 @@ namespace Api.Data
                 .HasMany(a => a.Attachments)
                 .WithOne(u => u.Transaction)
                 .HasForeignKey(a => a.TransactionId);
-            /*modelBuilder.Entity<IdentityRole>().HasData(
-                new IdentityRole
-                {
-                    Name = "Admin",
-                    NormalizedName = "ADMIN"
-                },
-                new IdentityRole
-                {
-                    Name = "User",
-                    NormalizedName = "USER"
-                }
-            );*/
         }
     }
 }

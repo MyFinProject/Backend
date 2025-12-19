@@ -7,6 +7,7 @@ namespace Api.Interfaces
     {
         public Task<List<Currency>> GetAllAsync();
         public Task<Currency?> GetByCodeAsync(string Code);
+        public Task<Currency?> GetByIdAsync(string CurrencyId);
         public Task<Currency> CreateAsync(Currency currencieModel);
         public Task<Currency> UpdateAsync(string id, CurrencyDto currenceDto);
         public Task<Currency?> DeleteAsync(string id);

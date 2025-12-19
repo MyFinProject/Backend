@@ -175,7 +175,7 @@ namespace Api.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("Api.Models.Currencie", b =>
+            modelBuilder.Entity("Api.Models.Currency", b =>
                 {
                     b.Property<string>("CurrencieId")
                         .ValueGeneratedOnAdd()
@@ -252,6 +252,10 @@ namespace Api.Migrations
                         .HasColumnType("double precision");
 
                     b.Property<string>("CurrencieId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ImageAdress")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -426,7 +430,7 @@ namespace Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Api.Models.Currencie", "Currencie")
+                    b.HasOne("Api.Models.Currency", "Currencie")
                         .WithMany("Budgets")
                         .HasForeignKey("CurrencyId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -453,7 +457,7 @@ namespace Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Api.Models.Currencie", "Currencie")
+                    b.HasOne("Api.Models.Currency", "Currencie")
                         .WithMany("Transactions")
                         .HasForeignKey("CurrencieId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -474,7 +478,7 @@ namespace Api.Migrations
 
             modelBuilder.Entity("Api.Models.UserWallets", b =>
                 {
-                    b.HasOne("Api.Models.Currencie", "Currencie")
+                    b.HasOne("Api.Models.Currency", "Currencie")
                         .WithMany("UserAccounts")
                         .HasForeignKey("CurrencieId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -556,7 +560,7 @@ namespace Api.Migrations
                     b.Navigation("Transactions");
                 });
 
-            modelBuilder.Entity("Api.Models.Currencie", b =>
+            modelBuilder.Entity("Api.Models.Currency", b =>
                 {
                     b.Navigation("Budgets");
 

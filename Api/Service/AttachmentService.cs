@@ -14,7 +14,7 @@ namespace Api.Service
 
     public class AttachmentService : IAttachmentService
     {
-        public async Task<CheckModel?> ReadQr(AttachmentDto attachmentDto) 
+        public async Task<CheckModel?> ReadQr(AttachmentDto attachmentDto)
         {
             string token = "33330.6pWcOBkcY8e3wvjYw";
             string apiUrl = "https://proverkacheka.com/api/v1/check/get";
@@ -30,13 +30,13 @@ namespace Api.Service
 
                 string jsonResponse = await response.Content.ReadAsStringAsync();
 
-                if(jsonResponse == null)
+                if (jsonResponse == null)
                 {
                     return null;
                 }
 
                 ReceiptData receipt = JsonSerializer.Deserialize<ReceiptData>(jsonResponse);
-                
+
 
                 CheckModel check = new CheckModel
                 {

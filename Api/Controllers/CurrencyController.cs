@@ -27,10 +27,22 @@ namespace Api.Controllers
             return Ok(Currencies);
         }
 
-        [HttpGet("{Code}")]
-        public async Task<IActionResult> GetByCode([FromRoute] string Code)
+        [HttpGet("GetByCode/{Code}")]
+        public async Task<IActionResult> GetIdByCode([FromRoute] string Code)
         {
             var currencie = await _currenceRepository.GetByCodeAsync(Code);
+
+            if (currencie == null)
+            {
+                return NotFound();
+            }
+            return Ok(currencie.CurrencieId);
+        }
+
+        [HttpGet("GetById/{CurrencyId}")]
+        public async Task<IActionResult> GetById([FromRoute] string CurrencyId)
+        {
+            var currencie = await _currenceRepository.GetByIdAsync(CurrencyId);
 
             if (currencie == null)
             {
@@ -44,12 +56,12 @@ namespace Api.Controllers
         {
             var CurrencieModel = currencieDto.ToCurrenceFromDto();
             await _currenceRepository.CreateAsync(CurrencieModel);
-            return CreatedAtAction(nameof(GetByCode), new { id = CurrencieModel.CurrencieId }, CurrencieModel.ToCurrenceDTO());
+            return CreatedAtAction(nameof(GetIdByCode), new { id = CurrencieModel.CurrencieId }, CurrencieModel.ToCurrenceDTO());
 
         }
 
         [HttpPut]
-        [Route("{id}")]
+        [Route("Update/{id}")]
         public async Task<IActionResult> Update([FromRoute]string id,[FromBody] CurrencyDto updateCurrenceDto)
         {
             var currenceModel = await _currenceRepository.UpdateAsync(id, updateCurrenceDto);
@@ -58,7 +70,7 @@ namespace Api.Controllers
         }
 
         [HttpDelete]
-        [Route("{id}")]
+        [Route("Delete/{id}")]
         public async Task<IActionResult> Delete([FromRoute] string id)
         {
             var CurrenceModel = await _currenceRepository.DeleteAsync(id);
@@ -69,6 +81,18 @@ namespace Api.Controllers
             }
 
             return NoContent();
+        }
+
+        [HttpGet("GetRateByCode/{Code}")]
+        public async Task<IActionResult> GetRateByCode([FromRoute] string Code)
+        {
+            var currencie = await _currenceRepository.GetByCodeAsync(Code);
+
+            if (currencie == null)
+            {
+                return NotFound();
+            }
+            return Ok(currencie.Rate);
         }
     }
 }

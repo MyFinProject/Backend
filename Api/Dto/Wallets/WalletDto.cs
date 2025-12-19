@@ -16,5 +16,6 @@ namespace Api.Dto.Wallets
         public string CurrencieId { get; set; }
         [Required]
         public bool IsActive { get; set; }
+        public string ImageAdress { get; set; }
     }
 }

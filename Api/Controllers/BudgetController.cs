@@ -23,14 +23,14 @@ namespace Api.Controllers
             {
                 return NotFound();
             }
-            return Ok(budgetModel);
+            return Ok(budgetModel.ToBudgetDto());
         }
 
-        [HttpPost]
+        [HttpPost("Create")]
         public async Task<IActionResult> Create([FromBody] BudgetDto budgetDto)
         {
             Budget budgetModel = await _budgetRepository.CreateAsync(budgetDto);
-            return CreatedAtAction(nameof(GetById), new { id = budgetModel.BudgetId }, budgetModel.ToBudgetDto());
+            return Ok(budgetModel.ToBudgetDto());
         }
 
         [HttpGet("GetAllByUserId/{UserId}")]
